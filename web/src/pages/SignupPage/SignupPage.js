@@ -52,7 +52,7 @@ const SignupPage = () => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Signup</h2>
+              <h2 className="rw-heading rw-heading-secondary">สมัครสมาชิก</h2>
             </header>
 
             <div className="rw-segment-main">
@@ -63,7 +63,7 @@ const SignupPage = () => {
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
                   >
-                    Email
+                    อีเมล์
                   </Label>
                   <TextField
                     name="username"
@@ -73,7 +73,7 @@ const SignupPage = () => {
                     validation={{
                       required: {
                         value: true,
-                        message: 'Username is required',
+                        message: 'กรุณากรอกอีเมล์',
                       },
                     }}
                   />
@@ -85,7 +85,7 @@ const SignupPage = () => {
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
                   >
-                    Password
+                    รหัสผ่าน
                   </Label>
                   <PasswordField
                     name="password"
@@ -95,7 +95,7 @@ const SignupPage = () => {
                     validation={{
                       required: {
                         value: true,
-                        message: 'Password is required',
+                        message: 'กรุณากรอกรหัสผ่าน',
                       },
                     }}
                   />
@@ -103,73 +103,20 @@ const SignupPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <Label
-                    name="FirstName"
+                    name="gender"
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
                   >
-                    FirstName
-                  </Label>
-                  <TextField
-                    name="firstName"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'FirstName is required',
-                      },
-                    }}
-                  />
-
-                  <FieldError name="firstName" className="rw-field-error" />
-
-                  <Label
-                    name="lastName"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    LastName
-                  </Label>
-                  <TextField
-                    name="lastName"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'lastName is required',
-                      },
-                    }}
-                  />
-
-                  <FieldError name="lastName" className="rw-field-error" />
-
-                  <Label
-                    name="lastname"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Gender
+                    เพศ
                   </Label>
                   <SelectField name="gender" className="rw-input w-full">
-                    <option>Male</option>
-                    <option>Female</option>
+                    <option>ชาย</option>
+                    <option>หญิง</option>
                   </SelectField>
-
-                  <Label
-                    name="dateofbirth"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Dateofbirth
-                  </Label>
-                  <DateField name="dateofbirth" className="rw-input w-full" />
 
                   <div className="rw-button-group">
                     <Submit className="rw-button rw-button-blue">
-                      Sign Up
+                      สมัครสมาชิก
                     </Submit>
                   </div>
                 </Form>
@@ -177,9 +124,9 @@ const SignupPage = () => {
             </div>
           </div>
           <div className="rw-login-link">
-            <span>Already have an account?</span>{' '}
+            <span>ท่านมีบัญชีอยู่แล้ว?</span>{' '}
             <Link to={routes.login()} className="rw-link">
-              Log in!
+              เข้าสู่ระบบ!
             </Link>
           </div>
         </div>

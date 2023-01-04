@@ -1,3 +1,4 @@
+import { json } from 'react-router-dom'
 import { db } from 'src/lib/db'
 
 export const runs = () => {
@@ -78,11 +79,5 @@ export const findBestPace = () => {
     where: {
       userId: context.currentUser.id,
     },
-  })
-}
-
-export const findTimeDiff = async ({ userId }) => {
-  const totalTime = await db.run.aggregate({
-
   })
 }

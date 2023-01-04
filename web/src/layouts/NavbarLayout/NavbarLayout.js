@@ -181,7 +181,6 @@ const NavbarLayout = ({ children }) => {
                                   <>
                                     {currentUser.roles === 'governor' ? (
                                       <>
-                                        <h1>governor</h1>
                                         {navigationGovernor.map((item) => (
                                           <Link
                                             key={item.name}
@@ -292,7 +291,7 @@ const NavbarLayout = ({ children }) => {
                           </Menu>
                         </div>
                       ) : (
-                        <Link to={routes.login()}>Login</Link>
+                        <Link to={routes.login()}>เข้าสู่ระบบ</Link>
                       )}
                     </div>
                   </div>

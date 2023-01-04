@@ -49,7 +49,7 @@ const LoginPage = () => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Login</h2>
+              <h2 className="rw-heading rw-heading-secondary">เข้าสู่ระบบ</h2>
             </header>
 
             <div className="rw-segment-main">
@@ -60,7 +60,7 @@ const LoginPage = () => {
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
                   >
-                    Username
+                    อีเมล์
                   </Label>
                   <TextField
                     name="username"
@@ -82,7 +82,7 @@ const LoginPage = () => {
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
                   >
-                    Password
+                    รหัสผ่าน
                   </Label>
                   <PasswordField
                     name="password"
@@ -102,23 +102,25 @@ const LoginPage = () => {
                       to={routes.forgotPassword()}
                       className="rw-forgot-link"
                     >
-                      Forgot Password?
+                      ลืมรหัสผ่าน?
                     </Link>
                   </div>
 
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Login</Submit>
+                    <Submit className="rw-button rw-button-blue">
+                      เข้าสู่ระบบ
+                    </Submit>
                   </div>
                 </Form>
               </div>
             </div>
           </div>
           <div className="rw-login-link">
-            <span>Don&apos;t have an account?</span>{' '}
+            <span>ท่านไม่มีสมาชิก?</span>{' '}
             <Link to={routes.signup()} className="rw-link">
-              Sign up!
+              สมัครสมาชิก!
             </Link>
           </div>
         </div>

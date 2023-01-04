@@ -3,10 +3,9 @@ import { useAuth } from '@redwoodjs/auth'
 import QRCode from 'qrcode.react'
 import { DateTime } from 'luxon'
 import { routes, Link } from '@redwoodjs/router'
+import _get from 'lodash/get'
 
 const Statistic = ({ findCurrentRun, findTotalRun, findBestPace }) => {
-
-  console.log(findTotalRun)
 
   const { currentUser, isAuthenticated } = useAuth()
   const [qrValue, setQrValue] = useState('QR-CODE')
@@ -27,8 +26,6 @@ const Statistic = ({ findCurrentRun, findTotalRun, findBestPace }) => {
     console.log(pngUrl)
   }
 
-  const timeDiff = findCurrentRun.startTime
-  console.log(timeDiff)
 
   return (
     <div className="container mx-auto">
@@ -56,7 +53,7 @@ const Statistic = ({ findCurrentRun, findTotalRun, findBestPace }) => {
                   Gender : {currentUser.gender}
                 </p>
                 <p className="mt-1 mx-4 text- text-gray-600">
-                  Birthday : {DateTime.fromISO(currentUser.dateOfBirth).toFormat('dd/LL/yyyy')}
+                  Birthday : {DateTime.fromISO(_get(currentUser.dateOfBirth)).toFormat('dd/LL/yyyy') === 'Invalid DateTime'? <span>ไม่มีข้อมูล</span> : DateTime.fromISO(_get(currentUser.dateOfBirth)).toFormat('dd/LL/yyyy')}
                 </p>
                 <p className="mt-1 mx-4 text- text-gray-600">
                   Role : {currentUser.roles}
@@ -107,16 +104,16 @@ const Statistic = ({ findCurrentRun, findTotalRun, findBestPace }) => {
                 <div className='grid grid-cols-3 gap-3'>
                   <div className='text-center'>
                     <p>Avg.Pace</p>
-                    <p>{findCurrentRun.pace}</p>
+                    <p>{_get(findCurrentRun,"pace","ไม่มีข้อมูล")}</p>
                   </div>
                   <div className='text-center'>
                     <p>Distace</p>
-                    <p>{findCurrentRun.distance} km</p>
+                    <p>{_get(findCurrentRun,"distance","ไม่มีข้อมูล")} / km</p>
                   </div>
                   <div className='text-center'>
                     <p>Time</p>
                     <p>
-                      {DateTime.fromISO(findCurrentRun.stopTime).diff(DateTime.fromISO(findCurrentRun.startTime), 'hours').toFormat(" hh ':' mm ':' ss ")}
+                      {DateTime.fromISO(_get(findCurrentRun,"stopTime")).diff(DateTime.fromISO(_get(findCurrentRun,"startTime")), 'hours').toFormat(" hh ':' mm ':' ss ") === 'Invalid Duration'? <p>ไม่มีข้อมูล</p> : DateTime.fromISO(_get(findCurrentRun,"stopTime")).diff(DateTime.fromISO(_get(findCurrentRun,"startTime")), 'hours').toFormat(" hh ':' mm ':' ss ") }
                     </p>
                   </div>
                 </div>
@@ -139,16 +136,16 @@ const Statistic = ({ findCurrentRun, findTotalRun, findBestPace }) => {
               <div className='grid grid-cols-3 gap-3'>
                 <div className='text-center'>
                   <p>Best Pace</p>
-                  <p>{findBestPace.pace}</p>
+                  <p>{_get(findBestPace,"pace","ไม่มีข้อมูล")}</p>
                 </div>
                 <div className='text-center'>
                   <p>Best Distace</p>
-                  <p>{findTotalRun} km</p>
+                  <p>{findTotalRun || "ไม่มีข้อมูล" } / km </p>
                 </div>
                 <div className='text-center'>
                   <p>Best Time</p>
                   <p>
-                    {DateTime.fromISO(findCurrentRun.stopTime).diff(DateTime.fromISO(findCurrentRun.startTime), 'hours').toFormat(" hh ':' mm ':' ss ")}
+                    {DateTime.fromISO(_get(findCurrentRun,"stopTime")).diff(DateTime.fromISO(_get(findCurrentRun,"startTime")), 'hours').toFormat(" hh ':' mm ':' ss ") === 'Invalid Duration'? <p>ไม่มีข้อมูล</p> : DateTime.fromISO(_get(findCurrentRun,"stopTime")).diff(DateTime.fromISO(_get(findCurrentRun,"startTime")), 'hours').toFormat(" hh ':' mm ':' ss ")}
                   </p>
                 </div>
               </div>
