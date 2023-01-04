@@ -16,11 +16,11 @@ export const schema = gql`
   }
 
   type Query {
-    parks: [Park!]! @skipAuth
-    park(id: String!): Park @skipAuth
-    countParks: String! @skipAuth
-    parkUserOwner(userId: String!): Park! @skipAuth
-    parkUserGovernors(userId: String!): [Park!]! @skipAuth
+    parks: [Park!]! @requireAuth
+    park(id: String!): Park @requireAuth
+    countParks: String! @requireAuth
+    parkUserOwner(userId: String!): Park! @requireAuth
+    parkUserGovernors(userId: String!): [Park!]! @requireAuth
   }
 
   input CreateParkInput {

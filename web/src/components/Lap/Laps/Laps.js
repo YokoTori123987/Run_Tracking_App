@@ -81,10 +81,10 @@ const LapsList = ({ laps }) => {
         <thead>
           <tr>
             {/* <th>Id</th> */}
+            <th>User Name</th>
+            <th>Path Name</th>
             <th>Start time</th>
             <th>Stop time</th>
-            <th>User id</th>
-            <th>Path id</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -92,6 +92,9 @@ const LapsList = ({ laps }) => {
           {laps.map((lap) => (
             <tr key={lap.id}>
               {/* <td>{truncate(lap.id)}</td> */}
+
+              <td>{truncate(lap.user.firstName + ' ' + lap.user.lastName)}</td>
+              <td>{truncate(lap.path.name)}</td>
               <td>
                 {DateTime.fromISO(lap.startTime).setLocale('th').toFormat('f')}
               </td>
@@ -104,8 +107,6 @@ const LapsList = ({ laps }) => {
                   DateTime.fromISO(lap.stopTime).setLocale('th').toFormat('f')
                 )}
               </td>
-              <td>{truncate(lap.user.firstName + ' ' + lap.user.lastName)}</td>
-              <td>{truncate(lap.path.name)}</td>
               <td>
                 <nav className="rw-table-actions">
                   {/* <Link

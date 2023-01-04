@@ -81,9 +81,9 @@ const LogsList = ({ logs }) => {
         <thead>
           <tr>
             {/* <th>Id</th> */}
-            <th>User id</th>
+            <th>User Name</th>
             <th>Time stamp</th>
-            <th>Checkpoint id</th>
+            <th>Checkpoint Name</th>
             <th>&nbsp;</th>
           </tr>
         </thead>

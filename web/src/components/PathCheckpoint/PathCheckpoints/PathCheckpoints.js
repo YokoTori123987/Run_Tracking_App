@@ -79,24 +79,24 @@ const PathCheckpointsList = ({ pathCheckpoints }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
+            {/* <th>Id</th> */}
+            <th>Path id</th>
             <th>Checkpoint id</th>
             <th>Prev checkpoint id</th>
             <th>Is start</th>
             <th>Is finish</th>
-            <th>Path id</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           {pathCheckpoints.map((pathCheckpoint) => (
             <tr key={pathCheckpoint.id}>
-              <td>{truncate(pathCheckpoint.id)}</td>
-              <td>{truncate(pathCheckpoint.checkpointId)}</td>
+              {/* <td>{truncate(pathCheckpoint.id)}</td> */}
+              <td>{truncate(pathCheckpoint.path.name)}</td>
+              <td>{truncate(pathCheckpoint.checkpoint.name)}</td>
               <td>{truncate(pathCheckpoint.prevCheckpointId)}</td>
               <td>{checkboxInputTag(pathCheckpoint.isStart)}</td>
               <td>{checkboxInputTag(pathCheckpoint.isFinish)}</td>
-              <td>{truncate(pathCheckpoint.pathId)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link

@@ -11,6 +11,12 @@ export const QUERY = gql`
       isStart
       isFinish
       pathId
+      path {
+        name
+      }
+      checkpoint {
+        name
+      }
     }
   }
 `

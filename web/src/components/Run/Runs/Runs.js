@@ -81,29 +81,30 @@ const RunsList = ({ runs }) => {
         <thead>
           <tr>
             {/* <th>Id</th> */}
-            <th>Start time</th>
-            <th>Stop time</th>
+            <th>User Name</th>
+            <th>Park Name</th>
             <th>Distance</th>
             <th>Pace</th>
-            <th>User id</th>
-            <th>Park id</th>
+            <th>Start time</th>
+            <th>Stop time</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           {runs.map((run) => (
             <tr key={run.id}>
+              <td>{truncate(run.user.firstName + ' ' + run.user.lastName)}</td>
+              <td>{truncate(run.park.name)}</td>
               {/* <td>{truncate(run.id)}</td> */}
+
+              <td>{truncate(run.distance)}</td>
+              <td>{truncate(run.pace)}</td>
               <td>
                 {DateTime.fromISO(run.startTime).setLocale('th').toFormat('f')}
               </td>
               <td>
                 {DateTime.fromISO(run.stopTime).setLocale('th').toFormat('f')}
               </td>
-              <td>{truncate(run.distance)}</td>
-              <td>{truncate(run.pace)}</td>
-              <td>{truncate(run.user.firstName + ' ' + run.user.lastName)}</td>
-              <td>{truncate(run.park.name)}</td>
               <td>
                 <nav className="rw-table-actions">
                   {/* <Link
