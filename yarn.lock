@@ -26733,6 +26733,7 @@ __metadata:
     dayjs: ^1.11.6
     flowbite: ^1.5.3
     framer-motion: ^6
+    lodash: ^4.17.21
     luxon: ^3.1.1
     postcss: ^8.4.17
     postcss-loader: ^7.0.1

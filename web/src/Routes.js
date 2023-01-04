@@ -70,7 +70,7 @@ const Routes = () => {
           </Set>
         </Private>
 
-        <Private unauthenticated="home" roles="governor ">
+        <Private unauthenticated="home" roles="governor">
           <Route path="/governor" page={GovernorPage} name="governor" />
         </Private>
 

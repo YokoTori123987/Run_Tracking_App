@@ -54,6 +54,7 @@ const checkboxInputTag = (checked) => {
 }
 
 const ParksList = ({ parks }) => {
+
   const [deletePark] = useMutation(DELETE_PARK_MUTATION, {
     onCompleted: () => {
       toast.success('Park deleted')
@@ -74,12 +75,12 @@ const ParksList = ({ parks }) => {
     }
   }
 
+
   return (
     <div className="rw-segment rw-table-wrapper-responsive">
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Image url</th>
             <th>Description</th>
@@ -93,7 +94,6 @@ const ParksList = ({ parks }) => {
         <tbody>
           {parks.map((park) => (
             <tr key={park.id}>
-              <td>{truncate(park.id)}</td>
               <td>{truncate(park.name)}</td>
               <td>{truncate(park.imageUrl)}</td>
               <td>{truncate(park.description)}</td>

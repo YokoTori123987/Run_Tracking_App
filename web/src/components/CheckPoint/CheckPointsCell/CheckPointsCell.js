@@ -10,6 +10,9 @@ export const QUERY = gql`
       name
       longitude
       latitude
+      park {
+        name
+      }
     }
   }
 `

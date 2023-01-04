@@ -79,7 +79,6 @@ const CheckpointsList = ({ checkpoints }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
             <th>Park id</th>
             <th>Name</th>
             <th>Longitude</th>
@@ -90,8 +89,7 @@ const CheckpointsList = ({ checkpoints }) => {
         <tbody>
           {checkpoints.map((checkpoint) => (
             <tr key={checkpoint.id}>
-              <td>{truncate(checkpoint.id)}</td>
-              <td>{truncate(checkpoint.parkId)}</td>
+              <td>{truncate(checkpoint.park.name)}</td>
               <td>{truncate(checkpoint.name)}</td>
               <td>{truncate(checkpoint.longitude)}</td>
               <td>{truncate(checkpoint.latitude)}</td>
