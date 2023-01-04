@@ -1,4 +1,5 @@
 import humanize from 'humanize-string'
+import { DateTime } from 'luxon'
 
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -79,7 +80,7 @@ const LapsList = ({ laps }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
+            {/* <th>Id</th> */}
             <th>Start time</th>
             <th>Stop time</th>
             <th>User id</th>
@@ -90,11 +91,21 @@ const LapsList = ({ laps }) => {
         <tbody>
           {laps.map((lap) => (
             <tr key={lap.id}>
-              <td>{truncate(lap.id)}</td>
-              <td>{timeTag(lap.startTime)}</td>
-              <td>{timeTag(lap.stopTime)}</td>
-              <td>{truncate(lap.userId)}</td>
-              <td>{truncate(lap.pathId)}</td>
+              {/* <td>{truncate(lap.id)}</td> */}
+              <td>
+                {DateTime.fromISO(lap.startTime).setLocale('th').toFormat('f')}
+              </td>
+              <td>
+                {DateTime.fromISO(lap.stopTime)
+                  .setLocale('th')
+                  .toFormat('f') === 'Invalid DateTime' ? (
+                  <p> ไม่มีข้อมูล </p>
+                ) : (
+                  DateTime.fromISO(lap.stopTime).setLocale('th').toFormat('f')
+                )}
+              </td>
+              <td>{truncate(lap.user.firstName + ' ' + lap.user.lastName)}</td>
+              <td>{truncate(lap.path.name)}</td>
               <td>
                 <nav className="rw-table-actions">
                   {/* <Link

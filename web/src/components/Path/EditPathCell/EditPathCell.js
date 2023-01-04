@@ -32,7 +32,6 @@ export const Failure = ({ error }) => (
 )
 
 export const Success = ({ path }) => {
-  console.log(path)
   const [updatePath, { loading, error }] = useMutation(UPDATE_PATH_MUTATION, {
     onCompleted: () => {
       toast.success('Path updated')
@@ -51,7 +50,7 @@ export const Success = ({ path }) => {
     <div className="rw-segment">
       <header className="rw-segment-header">
         <h2 className="rw-heading rw-heading-secondary">
-          Edit Path {path?.id}
+          Edit Path {path?.name}
         </h2>
       </header>
       <div className="rw-segment-main">

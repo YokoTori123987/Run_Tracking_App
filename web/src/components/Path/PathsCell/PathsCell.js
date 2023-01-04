@@ -9,6 +9,10 @@ export const QUERY = gql`
       name
       parkId
       distance
+      park {
+        id
+        name
+      }
     }
   }
 `

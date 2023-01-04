@@ -9,6 +9,13 @@ export const QUERY = gql`
       userId
       timeStamp
       checkpointId
+      user {
+        firstName
+        lastName
+      }
+      Checkpoint {
+        name
+      }
     }
   }
 `

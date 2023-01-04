@@ -1,4 +1,5 @@
 import humanize from 'humanize-string'
+import { DateTime } from 'luxon'
 
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -79,7 +80,7 @@ const RunsList = ({ runs }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
+            {/* <th>Id</th> */}
             <th>Start time</th>
             <th>Stop time</th>
             <th>Distance</th>
@@ -92,13 +93,17 @@ const RunsList = ({ runs }) => {
         <tbody>
           {runs.map((run) => (
             <tr key={run.id}>
-              <td>{truncate(run.id)}</td>
-              <td>{timeTag(run.startTime)}</td>
-              <td>{timeTag(run.stopTime)}</td>
+              {/* <td>{truncate(run.id)}</td> */}
+              <td>
+                {DateTime.fromISO(run.startTime).setLocale('th').toFormat('f')}
+              </td>
+              <td>
+                {DateTime.fromISO(run.stopTime).setLocale('th').toFormat('f')}
+              </td>
               <td>{truncate(run.distance)}</td>
               <td>{truncate(run.pace)}</td>
-              <td>{truncate(run.userId)}</td>
-              <td>{truncate(run.parkId)}</td>
+              <td>{truncate(run.user.firstName + ' ' + run.user.lastName)}</td>
+              <td>{truncate(run.park.name)}</td>
               <td>
                 <nav className="rw-table-actions">
                   {/* <Link

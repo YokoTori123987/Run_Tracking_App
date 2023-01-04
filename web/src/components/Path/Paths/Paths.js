@@ -79,7 +79,7 @@ const PathsList = ({ paths }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
+            {/* <th>Id</th> */}
             <th>Name</th>
             <th>Park id</th>
             <th>Distance</th>
@@ -89,9 +89,9 @@ const PathsList = ({ paths }) => {
         <tbody>
           {paths.map((path) => (
             <tr key={path.id}>
-              <td>{truncate(path.id)}</td>
+              {/* <td>{truncate(path.id)}</td> */}
               <td>{truncate(path.name)}</td>
-              <td>{truncate(path.parkId)}</td>
+              <td>{truncate(path.park.name)}</td>
               <td>{truncate(path.distance)}</td>
               <td>
                 <nav className="rw-table-actions">

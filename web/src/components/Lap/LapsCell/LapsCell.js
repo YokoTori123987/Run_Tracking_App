@@ -10,6 +10,13 @@ export const QUERY = gql`
       stopTime
       userId
       pathId
+      user {
+        firstName
+        lastName
+      }
+      path {
+        name
+      }
     }
   }
 `

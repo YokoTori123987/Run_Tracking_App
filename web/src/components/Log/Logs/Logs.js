@@ -1,4 +1,5 @@
 import humanize from 'humanize-string'
+import { DateTime } from 'luxon'
 
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -79,7 +80,7 @@ const LogsList = ({ logs }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
+            {/* <th>Id</th> */}
             <th>User id</th>
             <th>Time stamp</th>
             <th>Checkpoint id</th>
@@ -89,10 +90,12 @@ const LogsList = ({ logs }) => {
         <tbody>
           {logs.map((log) => (
             <tr key={log.id}>
-              <td>{truncate(log.id)}</td>
-              <td>{truncate(log.userId)}</td>
-              <td>{timeTag(log.timeStamp)}</td>
-              <td>{truncate(log.checkpointId)}</td>
+              {/* <td>{truncate(log.id)}</td> */}
+              <td>{truncate(log.user.firstName + ' ' + log.user.firstName)}</td>
+              <td>
+                {DateTime.fromISO(log.timeStamp).setLocale('th').toFormat('f')}
+              </td>
+              <td>{truncate(log.Checkpoint.name)}</td>
               <td>
                 <nav className="rw-table-actions">
                   {/* <Link

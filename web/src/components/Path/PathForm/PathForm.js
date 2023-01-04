@@ -36,7 +36,6 @@ const PathForm = (props) => {
     const record = { ...data, parkId: parkId }
     props.onSave(record, props?.path?.id)
   }
-
   const parkOption = data.parks.map((data) => ({
     value: data.id,
     label: data.name,

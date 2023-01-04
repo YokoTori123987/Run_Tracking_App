@@ -12,6 +12,13 @@ export const QUERY = gql`
       pace
       userId
       parkId
+      user {
+        firstName
+        lastName
+      }
+      park {
+        name
+      }
     }
   }
 `

@@ -26,8 +26,8 @@ model User {
   Run                 Run[]
   Log                 Log[]
   Lap                 Lap[]
-  OwnedParks          Park[]    @relation(name: "OwnedParks")
-  GovernedParks       Park[]    @relation(name: "GovernedParks")
+  OwnedParks          Park[]    @relation("OwnedParks")
+  GovernedParks       Park[]    @relation("GovernedParks")
 }
 
 model Park {

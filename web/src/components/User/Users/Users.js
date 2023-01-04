@@ -1,6 +1,7 @@
 import { Select as AntSelect } from 'antd'
 import { Tag } from 'antd'
 import humanize from 'humanize-string'
+import { DateTime } from 'luxon'
 
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -109,18 +110,18 @@ const UsersList = ({ users }) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
+            {/* <th>Id</th> */}
+            <th>First name</th>
+            <th>Last name</th>
             <th>Gender</th>
             <th>Email</th>
-            <th>Hashed password</th>
-            <th>Salt</th>
-            <th>Reset token</th>
-            <th>Reset token expires at</th>
+            {/* <th>Hashed password</th> */}
+            {/* <th>Salt</th> */}
+            {/* <th>Reset token</th> */}
+            {/* <th>Reset token expires at</th> */}
             <th>Roles</th>
             <th>Date of birth</th>
-            <th>First name</th>
             <th>Image url</th>
-            <th>Last name</th>
             <th>Current checkpoint</th>
             <th>Created at</th>
             <th>&nbsp;</th>
@@ -129,13 +130,15 @@ const UsersList = ({ users }) => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td>{truncate(user.id)}</td>
+              {/* <td>{truncate(user.id)}</td> */}
+              <td>{truncate(user.firstName)}</td>
+              <td>{truncate(user.lastName)}</td>
               <td>{truncate(user.gender)}</td>
               <td>{truncate(user.email)}</td>
-              <td>{truncate(user.hashedPassword)}</td>
-              <td>{truncate(user.salt)}</td>
-              <td>{truncate(user.resetToken)}</td>
-              <td>{timeTag(user.resetTokenExpiresAt)}</td>
+              {/* <td>{truncate(user.hashedPassword)}</td> */}
+              {/* <td>{truncate(user.salt)}</td> */}
+              {/* <td>{truncate(user.resetToken)}</td> */}
+              {/* <td>{timeTag(user.resetTokenExpiresAt)}</td> */}
               <td>
                 <AntSelect
                   style={{ width: '100px' }}
@@ -158,13 +161,13 @@ const UsersList = ({ users }) => {
                   ))}
                 </AntSelect>
               </td>
-              <td>{truncate(user.roles)}</td>
+              {/* <td>{truncate(user.roles)}</td> */}
               <td>{timeTag(user.dateOfBirth)}</td>
-              <td>{truncate(user.firstName)}</td>
               <td>{truncate(user.imageUrl)}</td>
-              <td>{truncate(user.lastName)}</td>
               <td>{truncate(user.currentCheckpoint)}</td>
-              <td>{timeTag(user.createdAt)}</td>
+              <td>
+                {DateTime.fromISO(user.createdAt).setLocale('th').toFormat('f')}
+              </td>
               <td>
                 <nav className="rw-table-actions">
                   {/* <Link
