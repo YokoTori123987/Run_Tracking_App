@@ -1,3 +1,4 @@
+import { Space, Button } from 'antd'
 import humanize from 'humanize-string'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -80,7 +81,7 @@ const PathCheckpointsList = ({ pathCheckpoints }) => {
         <thead>
           <tr>
             {/* <th>Id</th> */}
-            <th>Path id</th>
+            <th>Path Name</th>
             <th>Checkpoint id</th>
             <th>Prev checkpoint id</th>
             <th>Is start</th>
