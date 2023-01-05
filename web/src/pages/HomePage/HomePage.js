@@ -8,7 +8,7 @@ import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
-import { useQuery } from '@redwoodjs/web'
+// import { useQuery } from '@redwoodjs/web'
 
 const HomePage = () => {
 
@@ -31,22 +31,21 @@ const HomePage = () => {
     console.log(pngUrl)
   }
 
-  const QUERY = gql`
-    query FindCountQuery {
-      countUsers
-      countParks
-    }
-  `
+  // const QUERY = gql`
+  //   query FindCountQuery {
+  //     countUsers
+  //     countParks
+  //   }
+  // `
 
-  const { data, loading } = useQuery(QUERY)
-  if(loading)
-  return (
-    <div>Loading...</div>
-  )
+  // const { data, loading } = useQuery(QUERY)
+  // if(loading)
+  // return (
+  //   <div>Loading...</div>
+  // )
 
   // console.log(data.countUsers)
   // console.log(data.countParks)
-
   return (
     <>
       <MetaTags title="Home" description="Home page" />
@@ -60,39 +59,39 @@ const HomePage = () => {
       </header>
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          <Row gutter={16}>
-            <Col span={12}>
-              <Card>
-                <Statistic
-                  title="Active Users"
-                  value= {data.countUsers}
-                  valueStyle={{ color: '#3f8600' }}
-                />
-              </Card>
-            </Col>
-            <Col span={12}>
+          {/* <Row gutter={16}>
+            <Col span={4}>
               <Card>
                 <Statistic
                   title="Active Parks"
-                  value={data.countParks}
+                  // value={data.countParks}
                   valueStyle={{ color: '#3f8600' }}
+                  display="flex"
+                  align-items="center"
                 />
               </Card>
             </Col>
-          </Row>
+          </Row> */}
           <div className="px-4 py-6 sm:px-0">
+
             <div className="h-96 rounded-lg border-4 border-dashed border-gray-200">
-              {isAuthenticated && (
-                <>
+            {isAuthenticated && (
+              <>
+              <h1 className="text-2xl mt-6 text-xl font-mono font-bold flex justify-center">ชื่อผู้ใช้ : {currentUser.firstName} {currentUser.lastName}</h1>
+              <h1 className="mt-6 text-xl font-mono flex justify-center text-gray-400">กดปุ่ม Download QR Code ด้านล่างเพื่อนำ QR Code สเเกนในการวิ่ง</h1>
+
+
+                <div className="text-center">
                   <QRCode
                     id="qr-gen"
                     value={currentUser.id}
                     renderAs="png"
                     size={290}
+                    align-items="center"
                     level={'H'}
                     includeMargin={true}
+                    style={{margin: 'auto'}}
                   />
-                  <div className="text-center">
                     <Button
                       type="primary"
                       danger
@@ -102,6 +101,8 @@ const HomePage = () => {
                       Download QR Code
                     </Button>
                   </div>
+                  <br>
+                  </br>
                 </>
               )}
             </div>

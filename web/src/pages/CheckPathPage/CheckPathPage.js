@@ -37,7 +37,7 @@ const CheckPathPage = () => {
   const [checkpointId, setcheckpointId] = useState()
   const [checkRunningPath] = useMutation(CHECK_RUNING_PATH, {
     onCompleted: () => {
-      toast.success('Create Checkpoint Succeed')
+      toast.success('สแกนสำเร็จ')
     },
     onError: (error) => {
       toast.error(error.message)
