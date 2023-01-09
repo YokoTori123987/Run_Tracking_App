@@ -17,11 +17,12 @@ const EditProfile = ({ error, loading, profile, onSave }) => {
         <>
           <div className="mt-12 mx-12 md:mx-72">
             <div className="flex justify-center">
-            {isAuthenticated && (
+            <img src={profile.imageUrl} className="rounded-full w-64 sm:w-60 md:w-60 lg:w-80" />
+            {/* {isAuthenticated && (
               <>
                <img src={currentUser.imageUrl} className="rounded-full w-64 sm:w-60 md:w-60 lg:w-80" />
               </>
-            )}
+            )} */}
             </div>
             <div>
               <Form onSubmit={onSave} error={error}>

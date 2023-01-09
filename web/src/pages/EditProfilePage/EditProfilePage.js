@@ -4,7 +4,7 @@ import EditProfileCell from "src/components/EditProfileCell/EditProfileCell"
 
 const EditProfilePage = () => {
 
-  const { currentUser } = useAuth()
+  // const { currentUser } = useAuth()
 
   return (
     <>
@@ -21,7 +21,7 @@ const EditProfilePage = () => {
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <EditProfileCell profile={currentUser} />
+            <EditProfileCell />
           </div>
         </div>
       </main>

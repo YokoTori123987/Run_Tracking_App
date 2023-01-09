@@ -74,10 +74,9 @@ const HomePage = () => {
           </Row> */}
           <div className="px-4 py-6 sm:px-0">
 
-            <div className="h-96 rounded-lg border-4 border-dashed border-gray-200">
             {isAuthenticated && (
               <>
-              <h1 className="text-2xl mt-6 text-xl font-mono font-bold flex justify-center">ชื่อผู้ใช้ : {currentUser.firstName} {currentUser.lastName}</h1>
+              <h1 className="text-2xl mt-6 font-mono font-bold flex justify-center">ชื่อผู้ใช้ : {currentUser.firstName} {currentUser.lastName}</h1>
               <h1 className="mt-6 text-xl font-mono flex justify-center text-gray-400">กดปุ่ม Download QR Code ด้านล่างเพื่อนำ QR Code สเเกนในการวิ่ง</h1>
 
 
@@ -105,7 +104,6 @@ const HomePage = () => {
                   </br>
                 </>
               )}
-            </div>
           </div>
         </div>
       </main>
