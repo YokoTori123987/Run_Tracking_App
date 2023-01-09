@@ -9,6 +9,8 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/User/UsersCell'
 
+import Swal from 'sweetalert2'
+
 const DELETE_USER_MUTATION = gql`
   mutation DeleteUserMutation($id: String!) {
     deleteUser(id: $id) {
@@ -98,11 +100,27 @@ const UsersList = ({ users }) => {
       deleteUser({ variables: { id } })
     }
   }
-  const handleChangePosition = async (role, id) => {
-    console.log(id, role)
-    const data = await updateRoleUser({ variables: { id, role } })
-    // console.log(JSON.stringify(updateRoleUser))
-    console.log(data)
+
+  const handleChangePosition = async (role, id, firstName, lastName) => {
+    Swal.fire({
+      title: 'คุณแน่ใจไหม?',
+      text: "คุณต้องการเปลี่ยนตำแหน่งใช่หรือไม่!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ยืนยัน',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateRoleUser({ variables: { id, role }})
+        Swal.fire(
+          'เปลี่ยนเรียบร้อย',
+          'คุณเปลี่ยน role ของ '+ firstName + ' ' + lastName + ' เป็น ' + role + ' เรียบร้อย' ,
+          'success'
+        )
+      }
+    })
   }
 
   return (
@@ -143,7 +161,7 @@ const UsersList = ({ users }) => {
                 <AntSelect
                   style={{ width: '100px' }}
                   value={truncate(user.roles)}
-                  onChange={(e) => handleChangePosition(e, user.id)}
+                  onChange={(e) => handleChangePosition(e, user.id, user.firstName, user.lastName)}
                   loading={loading}
                   error={error}
                 >
@@ -151,11 +169,6 @@ const UsersList = ({ users }) => {
                     <>
                       <AntSelect.Option value={roles}>
                         <Tag color="black">{roles}</Tag>
-                        {/* {roles === 'admin' ? (
-                          <Tag color="green">{roles}</Tag>
-                        ) : (
-                          <Tag color="red">{roles}</Tag>
-                        )} */}
                       </AntSelect.Option>
                     </>
                   ))}

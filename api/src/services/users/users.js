@@ -54,7 +54,6 @@ export const updateRoleUser = ({ id, role }) => {
 
 export const countUsers = async () => {
   const eoe = await db.user.count()
-  console.log(eoe)
   return eoe
 }
 

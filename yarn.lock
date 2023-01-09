@@ -25045,6 +25045,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sweetalert2@npm:^11.6.16":
+  version: 11.6.16
+  resolution: "sweetalert2@npm:11.6.16"
+  checksum: 6f19a5c798911a6c2f20fee40874d38d4b36e8d3a36adedc52351df01d82101718cfe62478c475b31c3ccbbfe4355aee028545c46700b2189785e13af1b88b11
+  languageName: node
+  linkType: hard
+
 "symbol-observable@npm:^1.1.0":
   version: 1.2.0
   resolution: "symbol-observable@npm:1.2.0"
@@ -26745,6 +26752,7 @@ __metadata:
     react-qr-code: ^2.0.8
     react-qr-reader: ^3.0.0-beta-1
     react-select: ^5.5.2
+    sweetalert2: ^11.6.16
     tailwindcss: ^3.1.8
   languageName: unknown
   linkType: soft
