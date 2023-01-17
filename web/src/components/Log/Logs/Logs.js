@@ -7,6 +7,9 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Log/LogsCell'
 
+import { Input, Table } from 'antd'
+import { useState } from 'react'
+
 const DELETE_LOG_MUTATION = gql`
   mutation DeleteLogMutation($id: String!) {
     deleteLog(id: $id) {
@@ -75,58 +78,63 @@ const LogsList = ({ logs }) => {
     }
   }
 
+  const [ search, setSearch ] = useState("")
+
+  const columns = [
+    {
+      title: 'ผู้ใช้',
+      dataIndex: 'user',
+      width: '10%',
+      render: (record) => `${record.firstName} ${record.lastName}`,
+      filteredValue: [search],
+      onFilter: (value, record) => {
+        return String(record.user.firstName)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase()) ||
+          String(record.user.lastName)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase());
+      },
+    },
+    {
+      title: 'timeStamp',
+      dataIndex: 'timeStamp',
+      width: '10%',
+    },
+    {
+      title: 'Checkpoint',
+      dataIndex: 'Checkpoint',
+      width: '10%',
+      render: (record) => record.name,
+      sorter: (a, b) => a.Checkpoint.name.localeCompare(b.Checkpoint.name),
+      filters: [
+        {
+          text: 'A',
+          value: 'A'
+        },
+      ],
+      onFilter: (value, record) => record.Checkpoint.indexOf(value) === 0,
+    },
+  ]
+
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            {/* <th>Id</th> */}
-            <th>User Name</th>
-            <th>Time stamp</th>
-            <th>Checkpoint Name</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {logs.map((log) => (
-            <tr key={log.id}>
-              {/* <td>{truncate(log.id)}</td> */}
-              <td>{truncate(log.user.firstName + ' ' + log.user.firstName)}</td>
-              <td>
-                {DateTime.fromISO(log.timeStamp).setLocale('th').toFormat('f')}
-              </td>
-              <td>{truncate(log.Checkpoint.name)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  {/* <Link
-                    to={routes.log({ id: log.id })}
-                    title={'Show log ' + log.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editLog({ id: log.id })}
-                    title={'Edit log ' + log.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete log ' + log.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(log.id)}
-                  >
-                    Delete
-                  </button> */}
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <Input
+        placeholder="ค้นหาข้อความ...."
+        style={{ marginBottom: 12 , width: 500}}
+        allowClear
+        onSearch={(value) => {
+          setSearch(value);
+        }}
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
+
+      <div className="rw-segment rw-table-wrapper-responsive">
+        <Table columns={columns} dataSource={logs} />
+      </div>
+    </>
   )
 }
 

@@ -10,6 +10,9 @@ import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/User/UsersCell'
 
 import Swal from 'sweetalert2'
+import { Input, Table } from 'antd'
+import { useState } from 'react'
+import { set } from 'lodash'
 
 const DELETE_USER_MUTATION = gql`
   mutation DeleteUserMutation($id: String!) {
@@ -65,6 +68,7 @@ const checkboxInputTag = (checked) => {
   return <input type="checkbox" checked={checked} disabled />
 }
 export const Loading = () => <div>Loading...</div>
+
 const setroles = ['admin', 'user', 'governor', 'owner']
 
 const UsersList = ({ users }) => {
@@ -123,95 +127,102 @@ const UsersList = ({ users }) => {
     })
   }
 
+  const [ search, setSearch ] = useState("")
+
+  const columns = [
+    {
+      title: 'ชื่อจริง',
+      dataIndex: 'firstName',
+      filteredValue: [search],
+      onFilter: (value, record) => {
+        return String(record.firstName)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase()) ||
+          String(record.lastName)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase()) ||
+          String(record.gender)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase()) ||
+          String(record.email)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase()) ||
+          String(record.roles)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase());
+      },
+    },
+    {
+      title: 'นามสกุล',
+      dataIndex: 'lastName'
+    },
+    {
+      title: 'เพศ',
+      dataIndex: 'gender'
+    },
+    {
+      title: 'อีเมล์',
+      dataIndex: 'email'
+    },
+    {
+      title: 'ตำแหน่ง',
+      dataIndex: 'roles',
+      render: (record, user) => (
+        <>
+          <AntSelect
+            style={{ width: '100px' }}
+            value={record}
+            onChange={(e) => handleChangePosition(e, user.id, user.firstName, user.lastName)}
+            loading={loading}
+            error={error}
+          >
+            {setroles.map((roles) => (
+              <>
+                <AntSelect.Option value={roles}>
+                  <span>{roles}</span>
+                </AntSelect.Option>
+              </>
+            ))}
+          </AntSelect>
+        </>
+      ),
+    },
+    {
+      title: 'วันเกิด',
+      dataIndex: 'dateOfBirth',
+    },
+    {
+      title: 'รูปภาพ',
+      dataIndex: 'imageUrl'
+    },
+    {
+      title: 'ช็อคพ้อยท์ปัจจุบัน',
+      dataIndex: 'currentCheckpoint'
+    },
+    {
+      title: 'สร้างเมื่อ',
+      dataIndex: 'createdAt'
+    },
+  ]
+
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            {/* <th>Id</th> */}
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Gender</th>
-            <th>Email</th>
-            {/* <th>Hashed password</th> */}
-            {/* <th>Salt</th> */}
-            {/* <th>Reset token</th> */}
-            {/* <th>Reset token expires at</th> */}
-            <th>Roles</th>
-            <th>Date of birth</th>
-            <th>Image url</th>
-            <th>Current checkpoint</th>
-            <th>Created at</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              {/* <td>{truncate(user.id)}</td> */}
-              <td>{truncate(user.firstName)}</td>
-              <td>{truncate(user.lastName)}</td>
-              <td>{truncate(user.gender)}</td>
-              <td>{truncate(user.email)}</td>
-              {/* <td>{truncate(user.hashedPassword)}</td> */}
-              {/* <td>{truncate(user.salt)}</td> */}
-              {/* <td>{truncate(user.resetToken)}</td> */}
-              {/* <td>{timeTag(user.resetTokenExpiresAt)}</td> */}
-              <td>
-                <AntSelect
-                  style={{ width: '100px' }}
-                  value={truncate(user.roles)}
-                  onChange={(e) => handleChangePosition(e, user.id, user.firstName, user.lastName)}
-                  loading={loading}
-                  error={error}
-                >
-                  {setroles.map((roles) => (
-                    <>
-                      <AntSelect.Option value={roles}>
-                        <Tag color="black">{roles}</Tag>
-                      </AntSelect.Option>
-                    </>
-                  ))}
-                </AntSelect>
-              </td>
-              {/* <td>{truncate(user.roles)}</td> */}
-              <td>{timeTag(user.dateOfBirth)}</td>
-              <td>{truncate(user.imageUrl)}</td>
-              <td>{truncate(user.currentCheckpoint)}</td>
-              <td>
-                {DateTime.fromISO(user.createdAt).setLocale('th').toFormat('f')}
-              </td>
-              <td>
-                <nav className="rw-table-actions">
-                  {/* <Link
-                    to={routes.user({ id: user.id })}
-                    title={'Show user ' + user.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link> */}
-                  {/* <Link
-                    to={routes.editUser({ id: user.id })}
-                    title={'Edit user ' + user.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link> */}
-                  {/* <button
-                    type="button"
-                    title={'Delete user ' + user.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(user.id)}
-                  >
-                    Delete
-                  </button> */}
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <Input
+        placeholder="ค้นหาข้อความ...."
+        style={{ marginBottom: 12 , width: 500}}
+        allowClear
+        onSearch={(value) => {
+          setSearch(value);
+        }}
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
+
+      <div className="rw-segment rw-table-wrapper-responsive">
+        <Table columns={columns} dataSource={users} />
+      </div>
+    </>
   )
 }
 
