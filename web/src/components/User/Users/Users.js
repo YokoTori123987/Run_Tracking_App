@@ -14,6 +14,8 @@ import { Input, Table } from 'antd'
 import { useState } from 'react'
 import { set } from 'lodash'
 
+import QRCode from 'qrcode.react'
+
 const DELETE_USER_MUTATION = gql`
   mutation DeleteUserMutation($id: String!) {
     deleteUser(id: $id) {
@@ -128,6 +130,24 @@ const UsersList = ({ users }) => {
   }
 
   const [ search, setSearch ] = useState("")
+  const [qrValue, setQrValue] = useState('QR-CODE')
+
+  const downloadQRCode = (id) => {
+    setQrValue(id)
+    // Generate download with use canvas and stream
+    const canvas = document.getElementById('qr-gen')
+    const pngUrl = canvas
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream')
+
+    let downloadLink = document.createElement('a')
+    downloadLink.href = pngUrl
+    downloadLink.download = `${qrValue}.png`
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+    document.body.removeChild(downloadLink)
+    console.log(pngUrl)
+  }
 
   const columns = [
     {
@@ -200,6 +220,21 @@ const UsersList = ({ users }) => {
       dataIndex: 'currentCheckpoint'
     },
     {
+      title: 'qr code',
+      dataIndex: 'id',
+      render: (record) =>
+      <QRCode
+        id="qr-gen"
+        value={record}
+        renderAs="png"
+        size={100}
+        align-items="center"
+        level={'H'}
+        includeMargin={true}
+        style={{margin: 'auto'}}
+      />
+    },
+    {
       title: 'สร้างเมื่อ',
       dataIndex: 'createdAt'
     },
@@ -222,6 +257,7 @@ const UsersList = ({ users }) => {
       <div className="rw-segment rw-table-wrapper-responsive">
         <Table columns={columns} dataSource={users} />
       </div>
+
     </>
   )
 }

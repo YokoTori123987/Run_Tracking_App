@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useEffect } from 'react'
+import { useState } from 'react';
 
 import { useAuth } from '@redwoodjs/auth'
 import {
@@ -13,9 +14,40 @@ import {
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
+import { Button, Modal } from 'antd';
+import { QrReader } from 'react-qr-reader'
+
+import { useMutation } from '@redwoodjs/web'
+import { useQuery } from '@redwoodjs/web'
 
 const LoginPage = () => {
+
+  const QUERY = gql`
+    query FindIdQrCode($id: String!) {
+      user(id: $id) {
+        id
+        email
+        firstName
+        lastName
+    }
+  }
+  `
+
+  // const UPDATE_USER_MUTATION = gql`
+  //   mutation UpdateUserMutation($id: String!, $input: UpdateUserInput!) {
+  //     updateUser(id: $id, input: $input) {
+  //       id
+  //       email
+  //       firstName
+  //       lastName
+  //     }
+  //   }
+  // `
+
   const { isAuthenticated, logIn } = useAuth()
+  const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState('');
+
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -39,6 +71,15 @@ const LoginPage = () => {
       toast.success('Welcome back!')
     }
   }
+
+  // const { loading, data } = useQuery(QUERY, {
+  //   variables: { id },
+  //   skip: true,
+  // });
+
+  // if (loading) return null;
+
+
 
   return (
     <>
@@ -122,6 +163,35 @@ const LoginPage = () => {
             <Link to={routes.signup()} className="rw-link">
               สมัครสมาชิก!
             </Link>
+          </div>
+          <div className="rw-login-link">
+            <span>สมัครสมาชิกผ่าน</span>{' '}
+
+            <Button type="default" onClick={() => setOpen(true)}>
+              QR Code!
+            </Button>
+            <Modal
+              title="QR Code"
+              centered
+              open={open}
+              onCancel={() => setOpen(false)}
+              width={700}
+            >
+              <QrReader
+                key={userId}
+                delay={300}
+                onResult={(result, error) => {
+                  if (result) {
+                    setUserId(result.text)
+                  }
+                  if (error) {
+                    console.info(error);
+                  }
+                }}
+                style={{ width: '100%' }}
+              />
+              <p>{userId}</p>
+            </Modal>
           </div>
         </div>
       </main>
