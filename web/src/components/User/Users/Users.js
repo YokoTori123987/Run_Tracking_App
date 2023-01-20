@@ -227,7 +227,7 @@ const UsersList = ({ users }) => {
         id="qr-gen"
         value={record}
         renderAs="png"
-        size={100}
+        size={200}
         align-items="center"
         level={'H'}
         includeMargin={true}

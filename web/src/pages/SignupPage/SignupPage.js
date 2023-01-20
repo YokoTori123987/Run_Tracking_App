@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useAuth } from '@redwoodjs/auth'
 import {
@@ -18,7 +18,7 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
-
+  const [userId, setUserId] = useState()
   useEffect(() => {
     if (isAuthenticated) {
       navigate(routes.home())
@@ -28,10 +28,12 @@ const SignupPage = () => {
   // focus on email box on page load
   const usernameRef = useRef(null)
   useEffect(() => {
+    setUserId(window.location.search.replace('?id=', ''))
     usernameRef.current?.focus()
   }, [])
 
   const onSubmit = async (data) => {
+    // ใช้ userId ตรงนี้
     const response = await signUp({ ...data })
     if (response.message) {
       toast(response.message)
@@ -119,6 +121,7 @@ const SignupPage = () => {
                       สมัครสมาชิก
                     </Submit>
                   </div>
+                  {userId}
                 </Form>
               </div>
             </div>

@@ -19,8 +19,17 @@ import { QrReader } from 'react-qr-reader'
 
 import { useMutation } from '@redwoodjs/web'
 import { useQuery } from '@redwoodjs/web'
+import { render } from 'react-dom';
+
+import Swal from 'sweetalert2'
 
 const LoginPage = () => {
+
+  const Swal = require('sweetalert2')
+  const { isAuthenticated, logIn } = useAuth()
+  const [ open, setOpen ] = useState(false);
+  const [ userId, setUserId ] = useState('result');
+  const [ user , setUser ] = useState({})
 
   const QUERY = gql`
     query FindIdQrCode($id: String!) {
@@ -32,22 +41,6 @@ const LoginPage = () => {
     }
   }
   `
-
-  // const UPDATE_USER_MUTATION = gql`
-  //   mutation UpdateUserMutation($id: String!, $input: UpdateUserInput!) {
-  //     updateUser(id: $id, input: $input) {
-  //       id
-  //       email
-  //       firstName
-  //       lastName
-  //     }
-  //   }
-  // `
-
-  const { isAuthenticated, logIn } = useAuth()
-  const [open, setOpen] = useState(false);
-  const [userId, setUserId] = useState('');
-
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -62,7 +55,6 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     const response = await logIn({ ...data })
-
     if (response.message) {
       toast(response.message)
     } else if (response.error) {
@@ -72,14 +64,9 @@ const LoginPage = () => {
     }
   }
 
-  // const { loading, data } = useQuery(QUERY, {
-  //   variables: { id },
-  //   skip: true,
-  // });
-
-  // if (loading) return null;
-
-
+  const { loading, error, data, refetch } = useQuery(QUERY, {skip: true,});
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
@@ -171,9 +158,11 @@ const LoginPage = () => {
               QR Code!
             </Button>
             <Modal
-              title="QR Code"
+              title="SCan QR Code"
               centered
               open={open}
+              okButtonProps={{ style: { display: 'none' } }}
+              cancelButtonProps={{ style: { display: 'none' } }}
               onCancel={() => setOpen(false)}
               width={700}
             >
@@ -183,6 +172,30 @@ const LoginPage = () => {
                 onResult={(result, error) => {
                   if (result) {
                     setUserId(result.text)
+                    refetch({ id: result.text })
+                    .then((res) => {
+                      setUser(res.data.user)
+                      if(res.data.user.email === "", res.data.user.firstName === null, res.data.user.lastName === null){
+                        render(
+                          Swal.fire({
+                            title: 'กรุณากรอกข้อมูล',
+                            showConfirmButton: false,
+                            timer: 1500
+                          }),
+                          navigate('/update-user-qr/'+result.text)
+                        )
+
+                      } else if (res.data.user.email, res.data.user.firstName, res.data.user.lastName){
+                        render (
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'เกิดข้อผิดพลาด',
+                            text: 'QR Code User ถูกสมัครไปแล้ว!',
+                          }),
+                        )
+                      }
+                    })
+                    console.log(user)
                   }
                   if (error) {
                     console.info(error);
@@ -190,7 +203,7 @@ const LoginPage = () => {
                 }}
                 style={{ width: '100%' }}
               />
-              <p>{userId}</p>
+              <p className='text-center'>{userId}</p>
             </Modal>
           </div>
         </div>

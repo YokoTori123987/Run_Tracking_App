@@ -88,6 +88,7 @@ const Routes = () => {
         <Route path="/signup" page={SignupPage} name="signup" />
         <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+        <Route path="/update-user-qr/{id:String}" page={UpdateUserQrPage} name="updateUserQr" />
 
         <Route path="/" page={HomePage} name="home" />
         <Route path="/parks" page={ParksPage} name="parks" />
