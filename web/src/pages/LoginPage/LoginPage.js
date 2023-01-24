@@ -16,16 +16,14 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 import { Button, Modal } from 'antd';
 import { QrReader } from 'react-qr-reader'
-
+import Swal from 'sweetalert2'
 import { useMutation } from '@redwoodjs/web'
 import { useQuery } from '@redwoodjs/web'
 import { render } from 'react-dom';
 
-import Swal from 'sweetalert2'
 
 const LoginPage = () => {
 
-  const Swal = require('sweetalert2')
   const { isAuthenticated, logIn } = useAuth()
   const [ open, setOpen ] = useState(false);
   const [ userId, setUserId ] = useState('result');
@@ -65,8 +63,9 @@ const LoginPage = () => {
   }
 
   const { loading, error, data, refetch } = useQuery(QUERY, {skip: true,});
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    if (loading) return "Loading...";
+    if (error) return `Error! ${error.message}`;
+    console.log(data);
 
   return (
     <>
@@ -175,16 +174,15 @@ const LoginPage = () => {
                     refetch({ id: result.text })
                     .then((res) => {
                       setUser(res.data.user)
-                      if(res.data.user.email === "", res.data.user.firstName === null, res.data.user.lastName === null){
+                      if(res.data.user.email === null, res.data.user.firstName === null, res.data.user.lastName === null){
                         render(
                           Swal.fire({
                             title: 'กรุณากรอกข้อมูล',
                             showConfirmButton: false,
                             timer: 1500
                           }),
-                          navigate('/update-user-qr/'+result.text)
+                          navigate('/')
                         )
-
                       } else if (res.data.user.email, res.data.user.firstName, res.data.user.lastName){
                         render (
                           Swal.fire({
@@ -193,6 +191,7 @@ const LoginPage = () => {
                             text: 'QR Code User ถูกสมัครไปแล้ว!',
                           }),
                         )
+                        navigate('/')
                       }
                     })
                     console.log(user)
